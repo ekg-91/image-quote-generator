@@ -46,6 +46,7 @@ app.get('/filter/:token', requireToken, (req, res) => {
   const filteredList = filterListByKeyword(keyword);
   const paginatedList = paginate(filteredList, pageNum);
 
-  if (req.query.random) res.send(random(filteredList));
+  if (req.query.random && !pageNum) res.send(random(filteredList));
+  else if (!pageNum) res.send(filteredList);
   else res.send(paginatedList);
 });
