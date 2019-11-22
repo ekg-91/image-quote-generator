@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const QUOTES = require('./quotes/quotes.json');
-
 const requireToken = require('./middlewares/requireToken');
 
 const filterListByKeyword = (keyword) => QUOTES.filter(item =>
@@ -29,10 +28,18 @@ const paginate = (array, page, per_page) => {
     total_pages: total_pages,
     data: paginated
   };
+};
+
+const sum = (a, b) => {
+  return a + b;
 }
 
-app.listen(5000, () => {
-  console.log('Server running on port 5000');
+// Run the server only if not testing
+const PORT = process.env.PORT || 5000;
+
+const server = app.listen(PORT, () => {
+  // console.log(JSON.stringify(process.env, null, 2));
+  console.log(`Server running on port ${PORT}`);
 });
 
 app.get('/random/:token', requireToken, (req, res) => {
@@ -50,3 +57,12 @@ app.get('/filter/:token', requireToken, (req, res) => {
   else if (!pageNum) res.send(filteredList);
   else res.send(paginatedList);
 });
+
+module.exports = {
+  sum, 
+  shuffle, 
+  random, 
+  paginate, 
+  filterListByKeyword, 
+  server
+};

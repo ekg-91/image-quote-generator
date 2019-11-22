@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "server": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "nodemon index.js",
+    "test": "PORT=5001 jest --detectOpenHandles"
   },
   "author": "elliot_g",
   "license": "ISC",
