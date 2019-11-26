@@ -4,7 +4,7 @@ const QUOTES = require('./quotes/quotes.json');
 const requireToken = require('./middlewares/requireToken');
 
 const filterListByKeyword = (keyword) => QUOTES.filter(item =>
-    item.quoteText.toLowerCase().search(keyword) !== -1 || 
+  item.quoteText.toLowerCase().search(keyword) !== -1 ||
     item.quoteAuthor.toLowerCase().search(keyword) !== -1);
 
 const shuffle = (array) => array.sort(() => Math.random() - 0.5);
@@ -14,11 +14,11 @@ const random = (array) => shuffle(array)[0];
 const paginate = (array, page, per_page) => {
   page = page || 1;
   per_page = per_page || 10;
-  let offset = (page - 1) * per_page;
+  const offset = (page - 1) * per_page;
 
-  let paginated = array.slice(offset).slice(0, per_page);
-  let total_pages = Math.ceil(array.length / per_page);
-  
+  const paginated = array.slice(offset).slice(0, per_page);
+  const total_pages = Math.ceil(array.length / per_page);
+
   return {
     page: page,
     per_page: per_page,
@@ -30,10 +30,6 @@ const paginate = (array, page, per_page) => {
   };
 };
 
-const sum = (a, b) => {
-  return a + b;
-}
-
 // Run the server only if not testing
 const PORT = process.env.PORT || 5000;
 
@@ -43,7 +39,7 @@ const server = app.listen(PORT, () => {
 });
 
 app.get('/random/:token', requireToken, (req, res) => {
-  let randomIndex = Math.floor(Math.random() * QUOTES.length);
+  const randomIndex = Math.floor(Math.random() * QUOTES.length);
   res.send(QUOTES[randomIndex]);
 });
 
@@ -59,10 +55,9 @@ app.get('/filter/:token', requireToken, (req, res) => {
 });
 
 module.exports = {
-  sum, 
-  shuffle, 
-  random, 
-  paginate, 
-  filterListByKeyword, 
+  shuffle,
+  random,
+  paginate,
+  filterListByKeyword,
   server
 };
